@@ -88,6 +88,3 @@ source ~/.bash_profile
 eval $(thefuck --alias)
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 alias tmux="TERM=xterm-256color tmux"
-
-
-. /Users/libingchen/Code/distro/install/bin/torch-activate

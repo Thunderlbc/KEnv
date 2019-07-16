@@ -9,5 +9,6 @@ CHECK sudo yum install zsh -y
 
 CHECK_EMPTY_VAR $HOME
 
-CHECK cp -r confs/zsh/oh-my-zsh $HOME/.oh-my-zsh
+mkdir $HOME/.oh-my-zsh
+CHECK cp -r confs/zsh/oh-my-zsh/* $HOME/.oh-my-zsh
 CHECK cp -r confs/zsh/zshrc $HOME/.zshrc
