@@ -109,6 +109,10 @@ function ylogs(){
     yarn logs -applicationId $1 > yarn.logs
 }
 
+function ylist(){
+  yarn application -list
+}
+
 function hjoblist() {
 local qname=root; 
 if [ "x$1" != x ]; then
