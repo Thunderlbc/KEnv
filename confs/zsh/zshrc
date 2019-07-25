@@ -110,7 +110,10 @@ function ylogs(){
 }
 
 function hjoblist() {
-local qname=$1; [ "x$qname" == x ] && qname=root
+local qname=root; 
+if [ "x$1" != x ]; then
+  qname=$1
+fi
 local ts=`date +%s%u`
 local temp=.temp.hjoblist.$ts
   hadoop job -list > $temp
