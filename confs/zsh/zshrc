@@ -85,6 +85,46 @@ source ~/.bash_profile
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-eval $(thefuck --alias)
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 alias tmux="TERM=xterm-256color tmux"
+# Hadoop Functions and Alias
+alias hls="hadoop fs -ls"
+alias hcp="hadoop fs -cp"
+alias hmv="hadoop fs -mv"
+alias hrmr="hadoop fs -rmr"
+alias hmkdir="hadoop fs -mkdir"
+alias hget="hadoop fs -get"
+alias hput="hadoop fs -put"
+alias hgetmerge="hadoop fs -getmerge"
+alias hcat="hadoop fs -cat"
+alias htext="hadoop fs -text"
+alias hkill="hadoop job -kill"
+alias htouchz="hadoop fs -touchz"
+alias hdu="hadoop fs -du -s -h"
+
+function hveryhigh(){
+local jobid=$1
+  hadoop job -set-priority $jobid VERY_HIGH
+}
+function ylogs(){
+    yarn logs -applicationId $1 > yarn.logs
+}
+
+function ylist(){
+  yarn application -list
+}
+
+function hjoblist() {
+local qname=root; 
+if [ "x$1" != x ]; then
+  qname=$1
+fi
+local ts=`date +%s%u`
+local temp=.temp.hjoblist.$ts
+  hadoop job -list > $temp
+  cat $temp | head -n1
+  cat $temp | grep $qname | cut -f7,9 | awk '{s+=$1; c+=1; m+=$2 }END{print "'$qname' : jobs",c,"containers",s,"memorys",m/1024,"G", m/1024/(s+int(s<=0)),"G/container" }'
+  cat $temp | grep $qname | cut -f4,7,9 | awk '{ tag=$1;  s[tag] +=$2; c[tag] +=1; m[tag] +=$3 }END{ for(tag in s) print tag, ": jobs",c[tag],"containers",s[tag],"memorys",m[tag]/1024,"G",m[tag]/1024/(s[tag]+int(s[tag]<=0)),"G/container" }'
+  cat $temp | head -n2 | tail -n1 | cut -f1,2,4,6,7,9 | sort -k1
+  cat $temp | grep $qname | cut -f1,2,4,6,7,9
+  rm -rf $temp
+}
